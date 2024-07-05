@@ -1,50 +1,66 @@
-<<<<<<< HEAD
-# Getting Started with Create React App
+# Rohi Mukka - Personal Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a personal portfolio website for Rohi Mukka, showcasing skills, projects, and professional information.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- Responsive design
+- Dark mode toggle
+- Animated sections
+- Interactive skill cloud with highlighted key skills
+- Project showcase
+- Contact form
 
-### `npm start`
+## Technologies Used
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- React
+- TypeScript
+- Tailwind CSS
+- Framer Motion (for animations)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisites
 
-### `npm run build`
+- Node.js (v14.0.0 or later)
+- npm (v6.0.0 or later)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone the repository:
+   git clone https://github.com/RohiMukka/Portfolio
+2. Navigate to the project directory:
+   cd your-portfolio-repo
+3. Install dependencies:
+   npm install
+4. Start the development server:
+   npm start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Customization
+You can create a data folder in your `src` directory and make it more ordered/customized for yourself. Examples are listed below.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Update personal information in `src/data/personalInfo.ts`
+- Modify project details in `src/data/projects.ts`
+- Adjust skills in `src/data/skills.ts`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Deployment
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This project can be easily deployed using platforms like Netlify, Vercel, or GitHub Pages. Refer to their respective documentation for deployment instructions.
 
-## Learn More
+## Contributing
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This is a personal project and is not open for contributions. However, if you have suggestions or find bugs, please open an issue.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-=======
-# Portfolio
->>>>>>> 68386998211e13fa49585abbebd6f170371adbcf
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## Contact
+
+Rohi Mukka - rmukka08@gmail.com
+Project: [Click here](https://github.com/RohiMukka/Portfolio)

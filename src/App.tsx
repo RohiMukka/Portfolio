@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion} from 'framer-motion';
 import { Github, Linkedin, Mail, Moon, Sun, Download, ExternalLink } from 'lucide-react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import rohiImage from './images/rohi.png';
 import p1Image from './images/p1.png';
 import p2Image from './images/p2.png';
@@ -451,6 +452,7 @@ const App = () => {
         <p>&copy; 2024 Rohi Mukka. All rights reserved.</p>
       </div>
     </footer>
+    <SpeedInsights />
   </div>
 );
 };

@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion} from 'framer-motion';
-import { Github, Linkedin, Mail, Moon, Sun, Download, ExternalLink } from 'lucide-react';
+import { Github, Linkedin, Mail, Moon, Sun, Download, ExternalLink, Menu, X } from 'lucide-react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import rohiImage from './images/rohi.png';
 import p1Image from './images/p1.png';
 import p2Image from './images/p2.png';
 import p3Image from './images/p3.png';
-
 
 interface NavBarProps {
   activeSection: string;
@@ -15,6 +14,12 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -22,7 +27,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md z-50 transition-colors duration-300"
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <motion.div
           whileHover={{ scale: 1.1 }}
           className="flex items-center space-x-4"
@@ -30,8 +35,17 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
           <img src={rohiImage} alt="Rohi Mukka" className="w-12 h-12 rounded-full" />
           <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Rohi Mukka</span>
         </motion.div>
-        <ul className="flex space-x-6 p-4">
-          {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => ( // ... (Removed 'Experience' from this array)
+        
+        {/* Hamburger menu for mobile */}
+        <div className="md:hidden">
+          <button onClick={toggleMenu} className="text-gray-600 dark:text-gray-300">
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+
+        {/* Desktop menu */}
+        <ul className="hidden md:flex space-x-6">
+          {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
             <motion.li key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <a
                 href={`#${item.toLowerCase()}`}
@@ -44,6 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
             </motion.li>
           ))}
         </ul>
+
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
@@ -53,6 +68,33 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
           {darkMode ? <Sun className="text-yellow-400" /> : <Moon className="text-gray-700" />}
         </motion.button>
       </div>
+
+      {/* Mobile menu */}
+      {isMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden bg-white dark:bg-gray-800 py-4"
+        >
+          <ul className="flex flex-col items-center space-y-4">
+            {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
+              <motion.li key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+                <a
+                  href={`#${item.toLowerCase()}`}
+                  className={`text-lg font-semibold ${
+                    activeSection === item.toLowerCase() ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300'
+                  } hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              </motion.li>
+            ))}
+          </ul>
+        </motion.div>
+      )}
     </motion.nav>
   );
 };
@@ -200,6 +242,27 @@ const App = () => {
     }
   }, []);
 
+  const handleDownloadCV = () => {
+    // The path is relative to the public folder
+    const fileUrl = process.env.PUBLIC_URL + '/Rohi_Mukka_Resume.pdf';
+    
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.setAttribute('download', 'Rohi_Mukka_Resume.pdf');
+    
+    // Append to the body, click programmatically, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const projectsRef = useRef<HTMLElement>(null);
+
+  const scrollToProjects = () => {
+    projectsRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -334,6 +397,7 @@ const App = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold text-lg shadow-lg hover:bg-blue-100 transition-colors duration-200"
+            onClick={scrollToProjects}
           >
             View My Work
           </motion.button>
@@ -359,6 +423,7 @@ const App = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="mt-8 bg-blue-600 text-white px-6 py-3 rounded-full font-semibold text-lg shadow-lg hover:bg-blue-700 transition-colors duration-200 flex items-center"
+              onClick={handleDownloadCV}
             >
               <Download className="mr-2" /> Download CV
             </motion.button>
@@ -375,7 +440,7 @@ const App = () => {
         </div>
       </section>
 
-      <section id="projects" className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+      <section id="projects" ref={projectsRef} className="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div className="container mx-auto px-4">
           <SectionTitle title="Featured Projects" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

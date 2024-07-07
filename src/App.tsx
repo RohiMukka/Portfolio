@@ -20,6 +20,20 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const SocialIcons = () => (
+    <>
+      <a href="https://github.com/RohiMukka" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+        <Github size={20} />
+      </a>
+      <a href="https://www.linkedin.com/in/rohi-mukka/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+        <Linkedin size={20} />
+      </a>
+      <a href="mailto:rohi.mukka35@gmail.com" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white transition-colors duration-200">
+        <Mail size={20} />
+      </a>
+    </>
+  );
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -27,30 +41,40 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md z-50 transition-colors duration-300"
     >
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <motion.div
-          whileHover={{ scale: 1.1 }}
-          className="flex items-center space-x-4"
+          whileHover={{ scale: 1.05 }}
+          className="flex items-center space-x-3"
         >
-          <img src={rohiImage} alt="Rohi Mukka" className="w-12 h-12 rounded-full" />
-          <span className="text-xl font-bold text-blue-600 dark:text-blue-400">Rohi Mukka</span>
+          <img src={rohiImage} alt="Rohi Mukka" className="w-10 h-10 rounded-full" />
+          <span className="text-lg font-bold text-blue-600 dark:text-blue-400 transition-colors duration-200">Rohi Mukka</span>
         </motion.div>
         
-        {/* Hamburger menu for mobile */}
-        <div className="md:hidden">
+        {/* Mobile dark mode toggle and hamburger menu */}
+        <div className="md:hidden flex items-center space-x-2">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleDarkMode}
+            className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors duration-200"
+          >
+            {darkMode ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} />}
+          </motion.button>
           <button onClick={toggleMenu} className="text-gray-600 dark:text-gray-300">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Desktop menu */}
-        <ul className="hidden md:flex space-x-6">
+        <ul className="hidden md:flex space-x-6 items-center">
           {['Home', 'About', 'Skills', 'Projects', 'Contact'].map((item) => (
             <motion.li key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
               <a
                 href={`#${item.toLowerCase()}`}
-                className={`text-lg font-semibold ${
-                  activeSection === item.toLowerCase() ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300'
+                className={`text-base font-semibold ${
+                  activeSection === item.toLowerCase() 
+                    ? 'text-blue-600 dark:text-blue-400' 
+                    : 'text-gray-600 dark:text-gray-300'
                 } hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200`}
               >
                 {item}
@@ -59,14 +83,18 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
           ))}
         </ul>
 
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={toggleDarkMode}
-          className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors duration-300"
-        >
-          {darkMode ? <Sun className="text-yellow-400" /> : <Moon className="text-gray-700" />}
-        </motion.button>
+        {/* Desktop social icons and dark mode toggle */}
+        <div className="hidden md:flex items-center space-x-4">
+          <SocialIcons />
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleDarkMode}
+            className="p-1 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors duration-200"
+          >
+            {darkMode ? <Sun size={20} className="text-yellow-400"/> : <Moon size={20} />}
+          </motion.button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -83,8 +111,10 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
               <motion.li key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
                 <a
                   href={`#${item.toLowerCase()}`}
-                  className={`text-lg font-semibold ${
-                    activeSection === item.toLowerCase() ? 'text-blue-600 dark:text-blue-400' : 'text-gray-600 dark:text-gray-300'
+                  className={`text-base font-semibold ${
+                    activeSection === item.toLowerCase() 
+                      ? 'text-blue-600 dark:text-blue-400' 
+                      : 'text-gray-600 dark:text-gray-300'
                   } hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -92,12 +122,16 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, toggleDarkMode, darkMode
                 </a>
               </motion.li>
             ))}
+            <div className="flex space-x-4 mt-4">
+              <SocialIcons />
+            </div>
           </ul>
         </motion.div>
       )}
     </motion.nav>
   );
 };
+
 
 interface SectionTitleProps {
   title: string;
